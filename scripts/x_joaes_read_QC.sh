@@ -14,5 +14,9 @@ srun --cpus-per-task=2 singularity exec $MYIMAGE seqkit stats $MEDBIOINFO/data/s
 echo "Running fastqc"
 srun --cpus-per-task=2 --time=00:30:00 singularity exec $MYIMAGE xargs -I{} -a $MEDBIOINFO/analyses/x_joaes_run_accessions.txt fastqc data/sra_fastq/{}_1.fastq.gz data/sra_fastq/{}_2.fastq.gz -o analyses/fastqc --threads 2 --noextract
 
+# run flash
+echo  "Merging reads with flash"
+srun --cpus-per-task=2 --time=00:30:00 singularity exec $MYIMAGE xargs -a analyses/x_joaes_run_accessions.txt -I{} flash -d data/merged_pairs -o {}.flash --compress --threads=2 data/sra_fastq/{}_1.fastq.gz data/sra_fastq/{}_2.fastq.gz 2>&1 | tee -a ./analyses/x_joaes_flash.log
+
 date
 echo "script end."
