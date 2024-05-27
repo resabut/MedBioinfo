@@ -8,7 +8,7 @@
 #SBATCH -o ./analyses/slurm.%A.%a.out   # standard output (STDOUT) redirected to these files (with Job ID and array ID in file names)
 #SBATCH -e ./analyses/slurm.%A.%a.err   # standard error  (STDERR) redirected to these files (with Job ID and array ID in file names)
 # /!\ Note that the ./outputs/ dir above needs to exist in the dir where script is submitted **prior** to submitting this script
-#SBATCH --array=1-100                # 1-N: clone this script in an array of N tasks: $SLURM_ARRAY_TASK_ID will take the value of 1,2,...,N
+#SBATCH --array=1                # 1-N: clone this script in an array of N tasks: $SLURM_ARRAY_TASK_ID will take the value of 1,2,...,N
 #SBATCH --job-name=MedBioinfo        # name of the task as displayed in squeue & sacc, also encouraged as srun optional parameter
 #SBATCH --mail-type END              # when to send an email notiification (END = when the whole sbatch array is finished)
 #SBATCH --mail-user joan.escriva_font@med.lu.se
@@ -31,7 +31,7 @@ cd ${workdir}
 # this extracts the item number $SLURM_ARRAY_TASK_ID from the file of accnums
 #accnum=$(sed -n "$SLURM_ARRAY_TASK_ID"p ${accnum_file})
 accnum="ERR6913138"
-input_file="${datadir}/${accnum}_10_reads.fq"
+input_file="${datadir}/${accnum}_100_reads.fq"
 # alternatively, just extract the input file as the item number $SLURM_ARRAY_TASK_ID in the data dir listing
 # this alternative is less handy since we don't get hold of the isolated "accnum", which is very handy to name the srun step below :)
 # input_file=$(ls "${datadir}/*.fastq.gz" | sed -n ${SLURM_ARRAY_TASK_ID}p)
