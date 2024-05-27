@@ -1,6 +1,5 @@
 #!/bin/bash
 #
-#SBATCH --partition=fast             # long, fast, etc.
 #SBATCH --ntasks=1                   # nb of *tasks* to be run in // (usually 1), this task can be multithreaded (see cpus-per-task)
 #SBATCH --nodes=1                    # nb of nodes to reserve for each task (usually 1)
 #SBATCH --cpus-per-task=1            # nb of cpu (in fact cores) to reserve for each task /!\ job killed if commands below use more cores
