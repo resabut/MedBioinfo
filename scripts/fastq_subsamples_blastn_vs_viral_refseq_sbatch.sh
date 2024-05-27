@@ -44,21 +44,21 @@ output_file="${workdir}/ABCjob.${SLURM_ARRAY_TASK_ID}.${accnum}.out"
 
 #################################################################
 # Start work
-srun --job-name=${accnum} blastn --threads ${SLURM_CPUS_PER_TASK} \
+srun --job-name=${accnum} blastn -num_threads ${SLURM_CPUS_PER_TASK} \
 -query ${input_file} \
 -db ${dbdir}/refseq_viral_genomic \
---out ${output_file} \
+-out ${output_file} \
 -evalue 1e-2 \
 -perc_identity 90 \
--max_target_seqs 5 \ # 5 results per query
--outfmt 6 # tabular format output
+-max_target_seqs \
+-outfmt "6"
 
 
 
 #################################################################
 # Clean up (eg delete temp files, compress output, recompress input etc)
 srun gzip ${input_file}
-srun gzip ${output_file}
+#srun gzip ${output_file}
 echo END: `date`
 
 

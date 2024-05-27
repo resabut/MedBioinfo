@@ -52,11 +52,11 @@ output_file="${workdir}/ABCjob.${SLURM_ARRAY_TASK_ID}.${accnum}.out"
 srun --job-name=${accnum} blastn --threads ${SLURM_CPUS_PER_TASK} \
 -query ${input_file} \
 -db ${dbdir}/refseq_viral_genomic \
---out ${output_file} \
--evalue 1 \ # not astringent at all
--perc_identity 75 \ # ok astringent
--max_target_seqs 5 \ # 5 results per query
--outfmt 6 # tabular format output
+-out ${output_file} \
+-evalue 1 \
+-perc_identity 75 \
+-max_target_seqs 5 \
+-outfmt 6
 
 
 
