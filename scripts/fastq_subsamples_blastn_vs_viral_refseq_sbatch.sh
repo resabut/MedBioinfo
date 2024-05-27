@@ -20,9 +20,10 @@ datadir="/proj/applied_bioinformatics/users/x_joaes/MedBioinfo/data/blastn_read_
 accnum_file="/proj/applied_bioinformatics/users/x_joaes/MedBioinfo/analyses/x_joaes_run_accessions.txt"
 alias blastn='/proj/applied_bioinformatics/tools/ncbi-blast-2.15.0+-src/blastn'
 dbdir="/proj/applied_bioinformatics/users/x_joaes/MedBioinfo/data/blast_db"
+MYIMAGE="/proj/applied_bioinformatics/users/x_joaes/apptainer/fastq_image_x_joaes.sif"
 echo START: `date`
 
-module load seqkit blast #as required
+
 
 mkdir -p ${workdir}      # -p because it creates all required dir levels **and** doesn't throw an error if the dir exists :)
 cd ${workdir}
