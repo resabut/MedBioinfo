@@ -16,7 +16,7 @@
 #################################################################
 # Preparing work (cd to working dir, get hold of input data, convert/un-compress input data when needed etc.)
 workdir="/proj/applied_bioinformatics/users/x_joaes/MedBioinfo/analyses/blastn_output"
-datadir="/proj/applied_bioinformatics/users/x_joaes/MedBioinfo/data/sra_fastq"
+datadir="/proj/applied_bioinformatics/users/x_joaes/MedBioinfo/data/merged_pairs"
 accnum_file="/proj/applied_bioinformatics/users/x_joaes/MedBioinfo/analyses/x_joaes_run_accessions.txt"
 alias blastn='/proj/applied_bioinformatics/tools/ncbi-blast-2.15.0+-src/blastn'
 dbdir="/proj/applied_bioinformatics/users/x_joaes/MedBioinfo/data/blast_db"
@@ -30,7 +30,7 @@ cd ${workdir}
 # this extracts the item number $SLURM_ARRAY_TASK_ID from the file of accnums
 accnum=$(sed -n "$SLURM_ARRAY_TASK_ID"p ${accnum_file})
 
-input_file="${datadir}/${accnum}.fq.gz"
+input_file="${datadir}/${accnum}.flash.extendedFrags.fastq.gz"
 
 # alternatively, just extract the input file as the item number $SLURM_ARRAY_TASK_ID in the data dir listing
 # this alternative is less handy since we don't get hold of the isolated "accnum", which is very handy to name the srun step below :)
