@@ -49,7 +49,7 @@ output_file="${workdir}/ABCjob.${SLURM_ARRAY_TASK_ID}.${accnum}.out"
 
 #################################################################
 # Start work
-srun --job-name=${accnum} /proj/applied_bioinformatics/tools/ncbi-blast-2.15.0+-src/blastn --threads ${SLURM_CPUS_PER_TASK} \
+srun --job-name=${accnum} /proj/applied_bioinformatics/tools/ncbi-blast-2.15.0+-src/blastn -threads ${SLURM_CPUS_PER_TASK} \
 -query ${input_file} \
 -db ${dbdir}/refseq_viral_genomic \
 -out ${output_file} \
