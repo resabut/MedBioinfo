@@ -31,7 +31,7 @@ cd ${workdir}
 # this extracts the item number $SLURM_ARRAY_TASK_ID from the file of accnums
 #accnum=$(sed -n "$SLURM_ARRAY_TASK_ID"p ${accnum_file})
 accnum="ERR6913138"
-input_file="${datadir}/${accnum}_100_reads.fq"
+input_file="${datadir}/${accnum}_100_reads.fa"
 # alternatively, just extract the input file as the item number $SLURM_ARRAY_TASK_ID in the data dir listing
 # this alternative is less handy since we don't get hold of the isolated "accnum", which is very handy to name the srun step below :)
 # input_file=$(ls "${datadir}/*.fastq.gz" | sed -n ${SLURM_ARRAY_TASK_ID}p)
@@ -44,14 +44,11 @@ output_file="${workdir}/ABCjob.${SLURM_ARRAY_TASK_ID}.${accnum}.out"
 
 #################################################################
 # Start work
-srun --job-name=${accnum} blastn -num_threads ${SLURM_CPUS_PER_TASK} \
--query ${input_file} \
--db ${dbdir}/refseq_viral_genomic \
--out ${output_file} \
--evalue 1e-2 \
--perc_identity 90 \
--max_target_seqs \
--outfmt "6"
+srun --job-name=${accnum} /proj/applied_bioinformatics/tools/ncbi-blast-2.15.0+-src/blastn -num_threads ${SLURM_CPUS_PER_TASK} -query ${input_file} \
+-db ${dbdir}/refseq_viral_genomic -out ${output_file} \
+-evalue 1e-2 -perc_identity 90 \
+-max_target_seqs 5 \
+-outfmt 6
 
 
 
