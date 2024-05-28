@@ -2,7 +2,7 @@
 #
 #SBATCH --ntasks=1                   # nb of *tasks* to be run in // (usually 1), this task can be multithreaded (see cpus-per-task)
 #SBATCH --nodes=1                    # nb of nodes to reserve for each task (usually 1)
-#SBATCH --cpus-per-task=1            # nb of cpu (in fact cores) to reserve for each task /!\ job killed if commands below use more cores
+#SBATCH --cpus-per-task=2            # nb of cpu (in fact cores) to reserve for each task /!\ job killed if commands below use more cores
 #SBATCH --mem=96GB                  # amount of RAM to reserve for the tasks /!\ job killed if commands below use more RAM
 #SBATCH --time=0-02:00               # maximal wall clock duration (D-HH:MM) /!\ job killed if commands below take more time than reservation
 #SBATCH -o ./log/slurm.%A.%a.out   # standard output (STDOUT) redirected to these files (with Job ID and array ID in file names)
@@ -37,7 +37,7 @@ input_file="${datadir}/${accnum}.fq.gz"
 # input_file=$(ls "${datadir}/*.fastq.gz" | sed -n ${SLURM_ARRAY_TASK_ID}p)
 
 # convert to fasta
-srun --cpus-per-task=2 singularity exec $MYIMAGE seqkit fq2fa ${input_file} -o ${workdir}/${accnum}.fa.gz --threads 2 
+srun --cpus-per-task=2 singularity exec ${MYIMAGE} seqkit fq2fa ${input_file} -o ${workdir}/${accnum}.fa.gz --threads 2 
 
 # new input_file
 input_file="${workdir}/${accnum}.fa"
@@ -49,7 +49,7 @@ output_file="${workdir}/ABCjob.${SLURM_ARRAY_TASK_ID}.${accnum}.out"
 
 #################################################################
 # Start work
-srun --job-name=${accnum} blastn --threads ${SLURM_CPUS_PER_TASK} \
+srun --job-name=${accnum} /proj/applied_bioinformatics/tools/ncbi-blast-2.15.0+-src/blastn --threads ${SLURM_CPUS_PER_TASK} \
 -query ${input_file} \
 -db ${dbdir}/refseq_viral_genomic \
 -out ${output_file} \
