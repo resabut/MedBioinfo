@@ -37,7 +37,7 @@ input_file="${datadir}/${accnum}.flash.extendedFrags.fastq.gz"
 # input_file=$(ls "${datadir}/*.fastq.gz" | sed -n ${SLURM_ARRAY_TASK_ID}p)
 
 # convert to fasta
-srun --cpus-per-task=2 singularity exec ${MYIMAGE} seqkit fq2fa ${input_file} -o ${workdir}/${accnum}.fa.gz --threads 2 
+srun --cpus-per-task=2 singularity exec -B /proj:/proj ${MYIMAGE} seqkit fq2fa ${input_file} -o ${workdir}/${accnum}.fa.gz --threads 2 
 
 # new input_file
 input_file="${workdir}/${accnum}.fa"
