@@ -20,6 +20,6 @@ kraken_sif="/proj/applied_bioinformatics/common_data/kraken2.sif"
 db_name="/proj/applied_bioinformatics/common_data/kraken_database/"
 
 
-srun singularity exec ${kraken_sif} kraken2 --paired --output ${workdir}/${accnum}.out --report ${workdir}/${accnum}.report --threads 1 -db ${db_name} ${datadir}/${accnum}_1.fastq.gz ${datadir}/${accnum}_2.fastq.gz
+srun singularity exec -B /proj:/proj ${kraken_sif} kraken2 --paired --output ${workdir}/${accnum}.out --report ${workdir}/${accnum}.report --threads 1 -db ${db_name} ${datadir}/${accnum}_1.fastq.gz ${datadir}/${accnum}_2.fastq.gz
 
 echo "Done!"
