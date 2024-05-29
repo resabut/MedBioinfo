@@ -24,6 +24,6 @@ db_name="/proj/applied_bioinformatics/common_data/kraken_database/"
 srun --job-name="kraken2" singularity exec -B /proj:/proj ${kraken_sif} kraken2 --paired --output ${workdir}/${accnum}.out --report ${workdir}/${accnum}.report --threads 1 -db ${db_name} ${datadir}/${accnum}_1.fastq.gz ${datadir}/${accnum}_2.fastq.gz
 
 # run bracken
-srun  --job-name="bracken" singularity exec -B /proj:/proj ${kraken_sif} bracken  -db ${db_name} -i ${workdir}/${accnum}.report -o ${bracken_workdir}/${accnum}.out -w ${bracken_workdir}/${accnum}.report
+srun  --job-name="bracken" singularity exec -B /proj:/proj ${kraken_sif} bracken -d ${db_name} -i ${workdir}/${accnum}.report -o ${bracken_workdir}/${accnum}.out -w ${bracken_workdir}/${accnum}.report
 
 echo "Done!"
