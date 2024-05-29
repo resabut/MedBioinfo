@@ -13,18 +13,23 @@
 #SBATCH --mail-type END              # when to send an email notiification (END = when the whole sbatch array is finished)
 #SBATCH --mail-user joan.escriva_font@med.lu.se
 
-# biggest fastq accnum
-accnum="ERR6913236"
+echo START: `date`
 datadir="/proj/applied_bioinformatics/users/x_joaes/MedBioinfo/data/sra_fastq"
 workdir="/proj/applied_bioinformatics/users/x_joaes/MedBioinfo/analyses/kraken2"
 bracken_workdir="/proj/applied_bioinformatics/users/x_joaes/MedBioinfo/analyses/bracken"
 kraken_sif="/proj/applied_bioinformatics/common_data/kraken2.sif"
 db_name="/proj/applied_bioinformatics/common_data/kraken_database/"
+accnum_file="/proj/applied_bioinformatics/users/x_joaes/MedBioinfo/analyses/x_joaes_run_accessions.txt"
+
+# get accnum
+accnum=$(sed -n "$SLURM_ARRAY_TASK_ID"p ${accnum_file})
+
 
 # run kraken2
 srun --job-name="kraken2" singularity exec -B /proj:/proj ${kraken_sif} kraken2 --paired --output ${workdir}/${accnum}.out --report ${workdir}/${accnum}.report --threads 1 -db ${db_name} ${datadir}/${accnum}_1.fastq.gz ${datadir}/${accnum}_2.fastq.gz
 
 # run bracken
-srun  --job-name="bracken" singularity exec -B /proj:/proj ${kraken_sif} bracken  -db ${db_name} -i ${workdir}/${accnum}.report -o ${bracken_workdir}/${accnum}.out -w ${bracken_workdir}/${accnum}.report
+srun  --job-name="bracken" singularity exec -B /proj:/proj ${kraken_sif} bracken  -d ${db_name} -i ${workdir}/${accnum}.report -o ${bracken_workdir}/${accnum}.out -w ${bracken_workdir}/${accnum}.report
 
 echo "Done!"
+echo END: `date`
