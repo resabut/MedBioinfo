@@ -2,7 +2,7 @@
 #
 #SBATCH --ntasks=1                   # nb of *tasks* to be run in // (usually 1), this task can be multithreaded (see cpus-per-task)
 #SBATCH --nodes=1                    # nb of nodes to reserve for each task (usually 1)
-#SBATCH --cpus-per-task=2            # nb of cpu (in fact cores) to reserve for each task /!\ job killed if commands below use more cores
+#SBATCH --cpus-per-task=1            # nb of cpu (in fact cores) to reserve for each task /!\ job killed if commands below use more cores
 #SBATCH --mem=96GB                  # amount of RAM to reserve for the tasks /!\ job killed if commands below use more RAM
 #SBATCH --time=0-01:00               # maximal wall clock duration (D-HH:MM) /!\ job killed if commands below take more time than reservation
 #SBATCH -o ./log/kraken2/slurm.%A.%a.out   # standard output (STDOUT) redirected to these files (with Job ID and array ID in file names)
@@ -23,13 +23,13 @@ accnum_file="/proj/applied_bioinformatics/users/x_joaes/MedBioinfo/analyses/x_jo
 accnum=$(sed -n "$SLURM_ARRAY_TASK_ID"p ${accnum_file})
 
 # convert kraken report to krona report
-python /proj/applied_bioinformatics/tools/KrakenTools/kreport2krona.py -r ${kraken2_workdir}/${accnum_file}.report -o ${workdir}/${accnum_file}.report
+python /proj/applied_bioinformatics/tools/KrakenTools/kreport2krona.py -r ${kraken2_workdir}/${accnum}.report -o ${workdir}/${accnum}.report
 
 # remove unnecessary prefixes
-cat ${workdir}/${accnum_file}.report | sed 's/\w__//g' > ${workdir}/${accnum_file}.clean.report 
+cat ${workdir}/${accnum}.report | sed 's/\w__//g' > ${workdir}/${accnum}.clean.report 
 
 # run krona
-srun  --job-name="$accnum" singularity exec -B /proj:/proj ${kraken_sif} ktImportText -o ${workdir}/${accnum_file}.clean.report.html   ${workdir}/${accnum_file}.clean.report 
+srun  --job-name="$accnum" singularity exec -B /proj:/proj ${kraken_sif} ktImportText -o ${workdir}/${accnum}.clean.report.html   ${workdir}/${accnum}.clean.report 
 
 
 echo "Done!"
