@@ -26,7 +26,7 @@ accnum=$(sed -n "$SLURM_ARRAY_TASK_ID"p ${accnum_file})
 python /proj/applied_bioinformatics/tools/KrakenTools/kreport2krona.py -r ${kraken2_workdir}/${accnum}.report -o ${workdir}/${accnum}.report
 
 # remove unnecessary prefixes
-cat ${workdir}/${accnum}.report | sed 's/\w__//g' > ${workdir}/${accnum}.clean.report 
+cat ${workdir}/${accnum}.report | sed 's/\w__//g' | tee ${workdir}/${accnum}.clean.report 
 
 # run krona
 srun  --job-name="$accnum" singularity exec -B /proj:/proj ${kraken_sif} ktImportText -o ${workdir}/${accnum}.clean.report.html   ${workdir}/${accnum}.clean.report 
