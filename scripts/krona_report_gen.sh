@@ -23,7 +23,7 @@ accnum_file="/proj/applied_bioinformatics/users/x_joaes/MedBioinfo/analyses/x_jo
 accnum=$(sed -n "$SLURM_ARRAY_TASK_ID"p ${accnum_file})
 
 # convert kraken report to krona report
-python /proj/applied_bioinformatics/tools/KrakenTools/kreport2krona.py -r ${kraken2_workdir}/${accnum}.report -o ${workdir}/${accnum}.report
+python /proj/applied_bioinformatics/tools/KrakenTools/kreport2krona.py -r "$kraken2_dir/$accnum.report" -o "$workdir/$accnum.report"
 
 # remove unnecessary prefixes
 cat ${workdir}/${accnum}.report | sed 's/\w__//g' | tee > ${workdir}/${accnum}.clean.report 
