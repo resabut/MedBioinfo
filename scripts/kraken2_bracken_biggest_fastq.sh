@@ -16,7 +16,7 @@
 accnum="ERR6913236"
 datadir="/proj/applied_bioinformatics/users/x_joaes/MedBioinfo/data/sra_fastq"
 workdir="/proj/applied_bioinformatics/users/x_joaes/MedBioinfo/analyses/kraken2"
-bracken_workdir = "/proj/applied_bioinformatics/users/x_joaes/MedBioinfo/analyses/bracken"
+bracken_workdir="/proj/applied_bioinformatics/users/x_joaes/MedBioinfo/analyses/bracken"
 kraken_sif="/proj/applied_bioinformatics/common_data/kraken2.sif"
 db_name="/proj/applied_bioinformatics/common_data/kraken_database/"
 
