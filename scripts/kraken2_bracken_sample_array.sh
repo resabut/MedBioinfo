@@ -26,10 +26,10 @@ accnum=$(sed -n "$SLURM_ARRAY_TASK_ID"p ${accnum_file})
 
 
 # run kraken2
-srun --job-name="kraken2" singularity exec -B /proj:/proj ${kraken_sif} kraken2 --paired --output ${workdir}/${accnum}.out --report ${workdir}/${accnum}.report --threads 2 -db ${db_name} ${datadir}/${accnum}_1.fastq.gz ${datadir}/${accnum}_2.fastq.gz
+srun --job-name="kraken2_$accnum" singularity exec -B /proj:/proj ${kraken_sif} kraken2 --paired --output ${workdir}/${accnum}.out --report ${workdir}/${accnum}.report --threads 2 -db ${db_name} ${datadir}/${accnum}_1.fastq.gz ${datadir}/${accnum}_2.fastq.gz
 
 # run bracken
-srun  --job-name="bracken" singularity exec -B /proj:/proj ${kraken_sif} bracken  -d ${db_name} -i ${workdir}/${accnum}.report -o ${bracken_workdir}/${accnum}.out -w ${bracken_workdir}/${accnum}.report
+srun  --job-name="bracken_$accnum" singularity exec -B /proj:/proj ${kraken_sif} bracken  -d ${db_name} -i ${workdir}/${accnum}.report -o ${bracken_workdir}/${accnum}.out -w ${bracken_workdir}/${accnum}.report
 
 echo "Done!"
 echo END: `date`
