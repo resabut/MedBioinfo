@@ -1,3 +1,7 @@
 *.sra
 .ipynb_checkpoints
-
+slurm.*
+data/*
+analyses/*
+*.sif
+singularity/blob 
